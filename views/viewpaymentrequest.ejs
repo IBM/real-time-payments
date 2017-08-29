@@ -1,0 +1,98 @@
+<!--
+# Copyright 2017 IBM Corp. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<%- include('head') %>
+<body>
+	<%- include('header') %>
+
+	<section>
+		<h1>Payment Request</h1>		
+
+		<%= locals.message %><br>		
+
+		<% 
+		var paymentrequest = locals.user.paymentrequest; 
+		var accounts = locals.user.accounts;	
+		var tokens = locals.user.tokens;		
+		
+		var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+		
+		var paymentRequestStaii = [
+		{ status: "A", label: "Active",   count: 0 },
+		{ status: "I", label: "Inactive", count: 0 },
+		{ status: "P", label: "Pending",  count: 0 }
+		];
+		
+		var status = "Unknown";
+		for(i = 0; i < paymentRequestStaii.length; i++) {
+			if( paymentRequestStaii[i].status == paymentrequest.status ) {
+				status = paymentRequestStaii[i].label;
+				break;
+			}
+		}
+		
+		var deactivationMemo = null;
+		if( paymentrequest.deactivationMemo ) {
+			deactivationMemo = "-" + paymentrequest.deactivationMemo;
+		}
+		
+		var d = new Date(paymentrequest.initiationDate); 
+		var initiationDate = d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getFullYear();
+		var initiationTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		
+		var token = null;
+		if( paymentrequest.requestorDetails ) {
+			token = paymentrequest.requestorDetails[0].token
+		}		
+		
+		var accountName = null;
+		var accountNumber = null;		
+		for(var i=0; i < tokens.length; i++) { 
+		    if(tokens[i].token = token) {
+				for(var j=0; j < accounts.length; j++) { 
+					if ( accounts[j].number == tokens[i].accountNumber ) { 
+						 accountName = accounts[j].name;
+						 accountNumber = accounts[j].number;
+						 break; 
+					 } 
+				 } 
+				 break; 
+			}
+		} 	
+		%>		
+		
+		<div>
+		<table>
+		<% if( !paymentrequest ) { %>
+			<tr><td>Nothing to see here.<br></td></tr>
+		<% } else { %>
+			<tr><td>Payment ID</td><td><%= paymentrequest.paymentRequestID %></td></tr>
+			<tr><td>Status</td><td><%= status %> <%=deactivationMemo%></td></tr>
+			<tr><td>Initiation Date</td><td><%=initiationDate%></td></tr>
+			<tr><td>Initiation Time</td><td><%=initiationTime%></td></tr>
+			<tr><td>Amount</td><td>$<%= (paymentrequest.amount).toFixed(2) %></td></tr>
+			<tr><td>Account</td><td><%= accountName %> - <%= accountNumber %></td></tr>
+			<tr><td>Email/Mobile #</td><td><%=token%></td></tr>
+			<tr><td>Sender</td><td><%= paymentrequest.responderToken %> (<%= paymentrequest.responderName %>)</td></tr>			
+		<% } %>
+		<tr><td colspan="2"><a href="./activity"><button class="button button1">OK</button></a></td></tr>
+		</table>
+		</div>
+
+	</section>
+</body>
+</html>

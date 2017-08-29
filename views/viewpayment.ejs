@@ -1,0 +1,96 @@
+<!--
+# Copyright 2017 IBM Corp. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<%- include('head') %>
+<body>
+	<%- include('header') %>
+
+	<section>
+		<h1>Payment</h1>		
+
+		<%= locals.message %><br>		
+
+		<% 
+		var payment = locals.user.payment; 
+		var accounts = locals.user.accounts;		
+		
+		var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+		
+		var paymentStaii = [
+		{ status: "A", label: "Accepted"  },
+		{ status: "C", label: "Completed" },
+		{ status: "D", label: "Delivered" },
+		{ status: "X", label: "Expired"   },
+		{ status: "F", label: "Failed"    },
+		{ status: "P", label: "Pending"   },
+		{ status: "T", label: "Pending"   },
+		{ status: "G", label: "Pending"   },
+		{ status: "S", label: "Sent"      }
+		];
+		
+		var status = "Unknown";
+		for(i = 0; i < paymentStaii.length; i++) {
+			if( paymentStaii[i].status == payment.status ) {
+				status = paymentStaii[i].label;
+				break;
+			}
+		}
+		
+		var accountName = null;
+		for(i = 0; i < accounts.length; i++) {
+			if( accounts[i].number == payment.accountNumber ) {
+				accountName = accounts[i].name;
+				break;
+			}
+		}
+		
+		var failureReasonDescription = null;
+		if( payment.failureReasonDescription ) {
+			failureReasonDescription = "(" + payment.failureReasonDescription + ")";
+		}
+		
+		var declineMemo = null;
+		if( payment.declineMemo ) {
+			declineMemo = "-" + payment.declineMemo;
+		}
+		
+		var d = new Date(payment.initiationTime); 
+		var initiationDate = d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getFullYear();
+		var initiationTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		
+		%>
+
+		<div>
+		<table>
+		<% if( !payment ) { %>
+			<tr><td>Nothing to see here.<br></td></tr>
+		<% } else { %>
+			<tr><td>Payment ID</td><td><%= payment.paymentID %></td></tr>
+			<tr><td>Status</td><td><%= status %> <%=failureReasonDescription%> <%=declineMemo%></td></tr>
+			<tr><td>Initiation Date</td><td><%=initiationDate%></td></tr>
+			<tr><td>Initiation Time</td><td><%=initiationTime%></td></tr>
+			<tr><td>Amount</td><td>$<%= (payment.amount).toFixed(2) %></td></tr>
+			<tr><td>Account</td><td><%= accountName %> - <%= payment.accountNumber %></td></tr>
+			<tr><td>Recipient</td><td><%= payment.recipientToken %> (<%= payment.recipientFirstName %> <%= payment.recipientLastName %>)</td></tr>			
+		<% } %>
+		<tr><td colspan="2"><a href="./activity"><button class="button button1">OK</button></a></td></tr>
+		</table>
+		</div>
+
+	</section>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!--
+# Copyright 2017 IBM Corp. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<%- include('head') %>
+<body>
+	<%- include('header') %>
+
+	<section>
+		<h1>Your Activity</h1>	
+		
+		<%= locals.message %><br>
+		
+		<% 
+		var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; 
+		
+		var paymentStaii = [
+		{ status: "A", label: "Accepted",  count: 0 },
+		{ status: "C", label: "Completed", count: 0 },
+		{ status: "D", label: "Delivered", count: 0 },
+		{ status: "X", label: "Expired",   count: 0 },
+		{ status: "F", label: "Failed",    count: 0 },
+		{ status: "P", label: "Pending",   count: 0 },
+		{ status: "T", label: "Pending",   count: 0 },
+		{ status: "G", label: "Pending",   count: 0 },
+		{ status: "S", label: "Sent",      count: 0 }
+		];
+		
+		var paymentRequestStaii = [
+		{ status: "A", label: "Active",   count: 0 },
+		{ status: "I", label: "Inactive", count: 0 },
+		{ status: "P", label: "Pending",  count: 0 }
+		];
+		
+		var totalpayments = 0;
+		var accounts = locals.user.accounts;
+		var payments = locals.user.payments;
+		var paymentrequests = locals.user.paymentrequests;
+		var tokens = locals.user.tokens;
+		
+		if(!accounts) {
+			accounts = []; // To avoid an NPE
+		}
+		if(!tokens) {
+			tokens = []; // To avoid an NPE
+		}
+		if(payments) { 
+			for(var i=0; i < payments.length; i++) { 
+				for(var j=0; j < paymentStaii.length; j++) { 
+					 if( payments[i].status == paymentStaii[j].status) { 
+						paymentStaii[j].count++; 
+						totalpayments++;
+					 } 	
+				 } 
+			} 
+		} else {
+			payments = []; // To avoid an NPE
+		}
+		if(paymentrequests) { 
+			 for(var i=0; i < paymentrequests.length; i++) { 
+				 for(var j=0; j < paymentRequestStaii.length; j++) { 
+					 if( paymentrequests[i].status == paymentRequestStaii[j].status) { 
+						 paymentRequestStaii[j].count++; 
+						 totalpayments++;
+					 } 	
+				 } 
+			 } 
+		} else {
+			paymentrequests = []; // To avoid an NPE
+		}
+		%>
+			
+		<%if (totalpayments > 0 ) { %>
+			<!-- Accepted -->
+			<%if (paymentStaii[0].count > 0) { %>
+				<button class="accordion"><h2><%= paymentStaii[0].label %> (<%= paymentStaii[0].count %>)</h2></button>
+				<div class="panel">
+				<table>			
+				<% for(var i=payments.length-1; i >= 0 ; i--) { %>
+					<% if( payments[i].status == paymentStaii[0].status ) { %>
+						<tr>
+						<% d = new Date(payments[i].initiationTime); %>					
+						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+						<td>
+						<%if (payments[i].paymentID) {%>
+							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+						<% } %>
+						Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>					 
+						<% for(var j=0; j < accounts.length; j++) { %>
+							<%if ( accounts[j].number == payments[i].accountNumber ) { %>
+								Using <%= accounts[j].name %> - <%=payments[i].accountNumber%>
+								<% break; %>
+							<% } %>
+						<% } %>
+						<%if (payments[i].paymentID) {%>
+							</a>
+						<% } %>
+						</td>
+						</tr>
+					<% } %>	
+				<% } %>	
+				</table>
+				</div>	
+			<% } %>	
+			
+			<!-- Active -->
+			<%if (paymentRequestStaii[0].count > 0) { %>
+				<button class="accordion"><h2><%= paymentRequestStaii[0].label %> (<%= paymentRequestStaii[0].count %>)</h2></button>
+				<div class="panel">
+				<table>	
+				<% for(var i=paymentrequests.length-1; i >= 0; i--) { %>
+					<% if( paymentrequests[i].status == paymentRequestStaii[0].status ) { %>
+						<tr>
+						<% d = new Date(paymentrequests[i].initiationDate); %>					
+						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+						<td>
+						<%if (paymentrequests[i].paymentRequestID) {%>
+							<a href="/viewpaymentrequest?paymentRequestID=<%=paymentrequests[i].paymentRequestID%>">
+						<% } %>
+						Requested $<%=paymentrequests[i].amount.toFixed(2)%> from <%=paymentrequests[i].responderToken%> (<%=paymentrequests[i].responderName%>)<br>
+						 						
+						<% for(var j=0; j < tokens.length; j++) { %>
+							<%if ( paymentrequests[i].requestorDetails[0].token == tokens[j].token ) { %>
+								<% for(var k=0; k < accounts.length; k++) { %>
+									<%if ( accounts[k].number == tokens[j].accountNumber ) { %>
+										Using <%= accounts[k].name %> - <%= accounts[k].number %>
+										<% break; %>
+									<% } %>
+								<% } %>
+								<% break; %>
+							<% } %>
+						<% } %>
+						
+						<%if (paymentrequests[i].paymentRequestID) {%>
+							</a>
+						<% } %>
+						</td>
+						</tr>
+					<% } %>	
+				<% } %>
+				</table>
+				</div>	
+			<% } %>				
+			
+			<!-- Completed, Delivered, Expired, Failed -->
+			<% for(var s=1; s < 5; s++) { %>
+				<%if (paymentStaii[s].count > 0) { %>
+					<button class="accordion"><h2><%= paymentStaii[s].label %> (<%= paymentStaii[s].count %>)</h2></button>
+					<div class="panel">
+					<table>		
+					<% for(var i=payments.length-1; i >= 0 ; i--) { %>
+						<% if( payments[i].status == paymentStaii[s].status) { %>
+							<tr>
+							<% d = new Date(payments[i].initiationTime); %>					
+							<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+							<td>
+							<%if (payments[i].paymentID) {%>
+								<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+							<% } %>
+							Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>							 
+							<% for(var j=0; j < accounts.length; j++) { %>
+								<%if ( accounts[j].number == payments[i].accountNumber ) { %>
+									Using <%= accounts[j].name %> - <%=payments[i].accountNumber%>
+									<% break; %>
+								<% } %>
+							<% } %>							
+							<%if (payments[i].paymentID) {%>
+								</a>
+							<% } %>
+							</td>
+							</tr>
+						<% } %>	
+					<% } %>	
+					</table>
+					</div>					
+				<% } %>
+			<% } %>
+			
+			<!-- Inactive -->
+			<%if (paymentRequestStaii[1].count > 0) { %>
+				<button class="accordion"><h2><%= paymentRequestStaii[1].label %> (<%= paymentRequestStaii[1].count %>)</h2></button>
+				<div class="panel">
+				<table>		
+				<% for(var i=payments.length-1; i >= 0 ; i--) { %>
+					<% for(var i=paymentrequests.length-1; i >= 0; i--) { %>
+						<tr>
+						<% d = new Date(paymentrequests[i].initiationDate); %>					
+						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+						<td>
+						<%if (paymentrequests[i].paymentRequestID) {%>
+							<a href="/viewpaymentrequest?paymentRequestID=<%=paymentrequests[i].paymentRequestID%>">
+						<% } %>
+						Requested $<%=paymentrequests[i].amount.toFixed(2)%> from <%=paymentrequests[i].responderToken%> (<%=paymentrequests[i].responderName%>)<br>				
+						<% for(var j=0; j < tokens.length; j++) { %>
+							<%if ( paymentrequests[i].requestorDetails[0].token == tokens[j].token ) { %>
+								<% for(var k=0; k < accounts.length; k++) { %>
+									<%if ( accounts[k].number == tokens[j].accountNumber ) { %>
+										Using <%= accounts[k].name %> - <%= accounts[k].number %>
+										<% break; %>
+									<% } %>
+								<% } %>
+								<% break; %>
+							<% } %>
+						<% } %>						
+						<%if (paymentrequests[i].paymentRequestID) {%>
+							</a>
+						<% } %>
+						</td>
+						</tr>
+					<% } %>	
+				<% } %>		
+				</table>
+				</div>
+			<% } %>	
+			
+			<!-- Pending is special because it has 3 paymentStaii and it is shared between Payments and PaymentRequests -->
+			<%if (paymentStaii[5].count + paymentStaii[6].count + paymentStaii[7].count + paymentRequestStaii[2].count > 0) { %>
+				<button class="accordion"><h2>Pending (<%= paymentStaii[5].count + paymentStaii[6].count + paymentStaii[7].count + paymentRequestStaii[2].count %>)</h2></button>
+				<div class="panel">
+				<table>		
+				<% for(var i=payments.length-1; i >= 0 ; i--) { %>
+					<% if( payments[i].status == "P" || 
+						   payments[i].status == "T" ||
+						   payments[i].status == "G" ) { %>
+						<tr>
+						<% d = new Date(payments[i].initiationTime); %>					
+						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+						<td>
+						<%if (payments[i].paymentID) {%>
+							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+						<% } %>
+						Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>
+						 <% for(var j=0; j < accounts.length; j++) { %>
+							<%if ( accounts[j].number == payments[i].accountNumber ) { %>
+								Using <%= accounts[j].name %> - <%=payments[i].accountNumber%>
+								<% break; %>
+							<% } %>
+						<% } %>						
+						<%if (payments[i].paymentID) {%>
+							</a>
+						<% } %>
+						</td>
+						</tr>
+					<% } %>	
+				<% } %>	
+				<% for(var i=paymentrequests.length-1; i >= 0; i--) { %>
+					<% if( paymentrequests[i].status == "P" ) { %>
+						<tr>
+						<% d = new Date(paymentrequests[i].initiationDate); %>					
+						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+						<td>
+						<%if (paymentrequests[i].paymentRequestID) {%>
+							<a href="/viewpaymentrequest?paymentRequestID=<%=paymentrequests[i].paymentRequestID%>">
+						<% } %>
+						Requested $<%=paymentrequests[i].amount.toFixed(2)%> from <%=paymentrequests[i].responderToken%> (<%=paymentrequests[i].responderName%>)<br>
+						<% for(var j=0; j < tokens.length; j++) { %>
+							<%if ( paymentrequests[i].requestorDetails[0].token == tokens[j].token ) { %>
+								<% for(var k=0; k < accounts.length; k++) { %>
+									<%if ( accounts[k].number == tokens[j].accountNumber ) { %>
+										Using <%= accounts[k].name %> - <%= accounts[k].number %>
+										<% break; %>
+									<% } %>
+								<% } %>
+								<% break; %>
+							<% } %>
+						<% } %>						
+						<%if (paymentrequests[i].paymentRequestID) {%>
+							</a>
+						<% } %>
+						</td>
+						</tr>
+					<% } %>	
+				<% } %>	
+				</table>
+				</div>	
+			<% } %>
+
+			<!-- Sent -->
+			<%if (paymentStaii[8].count > 0) { %>
+				<button class="accordion"><h2><%= paymentStaii[8].label %> (<%= paymentStaii[8].count %>)</h2></button>
+				<div class="panel">
+				<table>		
+				<% for(var i=payments.length-1; i >= 0 ; i--) { %>
+					<% if( payments[i].status == paymentStaii[8].status ) { %>
+						<tr>
+						<% d = new Date(payments[i].initiationTime); %>					
+						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
+						<td>
+						<%if (payments[i].paymentID) {%>
+							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+						<% } %>
+						Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>						 
+						<% for(var j=0; j < accounts.length; j++) { %>
+							<%if ( accounts[j].number == payments[i].accountNumber ) { %>
+								Using <%= accounts[j].name %> - <%=payments[i].accountNumber%>
+								<% break; %>
+							<% } %>
+						<% } %>						
+						<%if (payments[i].paymentID) {%>
+							</a>
+						<% } %>
+						</td>
+						</tr>
+					<% } %>	
+				<% } %>	
+				</table>
+				</div>	
+			<% } %>
+			
+
+		<% } else { %>
+			<h2>You have neither sent, nor requested any payments lately</h2>
+		<% } %>
+		
+	</section>
+	
+	
+	<script>
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+			acc[i].onclick = function(){
+				this.classList.toggle("active");
+				var panel = this.nextElementSibling;
+				if (panel.style.display === "block") {
+					panel.style.display = "none";
+				} else {
+					panel.style.display = "block";
+				}
+			}
+		}
+	</script>
+</body>
+</html>

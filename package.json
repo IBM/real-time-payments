@@ -1,0 +1,28 @@
+{
+   "name": "ftm4zelle",
+   "version": "1.0.0",
+   "description": "FTM for Zelle running in the IBM Cloud for Financial Services",
+   "main": "index.js",
+   "scripts": {
+      "start": "node server.js"
+   },
+   "author": "mhudson@us.ibm.com",
+   "license": "Apache-2.0",
+   "dependencies": {
+      "body-parser": "^1.0.2",
+      "cfenv": "^1.0.4",
+      "cookie-parser": "^1.0.1",
+      "ejs": "^2.5.7",
+      "express": "^4.15.4",
+      "express-session": "^1.15.5",
+      "moment": "^2.18.1",
+      "morgan": "^1.0.1",
+      "node-rest-client": "^3.1.0",
+      "password-hash": "^1.2.2",
+      "shorthash": "0.0.2"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.ibm.com/mhudson/ftm4zelle.git"
+   }
+}

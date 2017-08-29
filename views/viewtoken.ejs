@@ -1,0 +1,61 @@
+<!--
+# Copyright 2017 IBM Corp. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<%- include('head') %>
+<body>
+	<%- include('header') %>
+
+	<section>
+		<h1>Email/mobile #</h1>	
+
+		<%= locals.message %><br>		
+
+		<% 
+		var token; 
+		var accounts = locals.user.accounts; 
+		var tokens = locals.user.tokens; 
+		 
+		if (tokens) { 
+			for(var i=0; i < locals.user.tokens.length; i++) {
+				if (tokens[i].token == locals.user.token ) {
+					token = tokens[i];
+				}
+			}
+		}
+		%>
+		
+		<div>
+		<table>
+		<% if( !token ) { %>
+			<tr><td><a href="./tokens"><button class="button button1">Add/Edit Your Email/Mobile #</button></a></td></tr>
+		<% } else { %>
+			<tr><td>My contact info</td><td><%= token.token %></input></td></tr>
+			<tr><td>My deposit account</td><td>
+							<% for(var i=0; i < accounts.length; i++) { %>
+								<%if ( accounts[i].number == token.accountNumber ) { %>
+									<%= accounts[i].name %>
+									<% break; %>
+								<% } %>
+							<% } %>	- <%= token.accountNumber %></td></tr>		
+			<tr><td colspan="2"><a href="./edittoken?token=<%=token.token%>"><button class="button button1">Edit</button></a>&nbsp;<a href="./deletetoken?token=<%=token.token%>"><button class="button button1" onclick="return confirm('Are you sure?')">Delete</button></td></tr>
+		<% } %>
+		</table>
+		</div>
+
+	</section>
+</body>
+</html>

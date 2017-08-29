@@ -1,0 +1,68 @@
+<!--
+# Copyright 2017 IBM Corp. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<%- include('head') %>
+<body>
+	<%- include('header') %>
+
+	<section>
+		<h1>Edit email/mobile #</h1>	
+		
+		<%= locals.message %><br>
+
+		<% 
+		var token; 
+		var accounts = locals.user.accounts; 
+		var tokens = locals.user.tokens; 
+		for(var i=0; i < locals.user.tokens.length; i++) { 
+			if (tokens[i].token == locals.user.token ) { 
+				token = tokens[i]; 
+			}
+		} 
+		%>		
+		
+		<div>		
+		<% if( !token ) { %>
+			<table>
+			<tr><td><a href="./tokens"><button class="button button1">Add/Edit Your Email/Mobile #</button></a></td></tr>
+			</table>
+		<% } else { %>
+			<form method="post" action="./edittoken">
+			<table>
+			<tr><input type="hidden" name="contact" value="<%=token.token%>"><td>My contact info</td><td><%=token.token%></td></tr>
+			<tr><td>My deposit account</td><td>		
+				<select name="account">
+					<% for(var i=0; i < accounts.length; i++) { %>
+						<option <%if ( accounts[i].number == token.accountNumber ) { %>selected<% } %> value="<%= accounts[i].number %>"><%= accounts[i].name %> - <%= accounts[i].number %></option>
+					<% } %>
+				</select>  
+			</td></tr>
+			
+			<tr><td colspan="2">
+			<input type="checkbox" name="legal">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque condimentum eget urna quis dapibus. Aliquam porttitor metus vitae magna tristique pulvinar. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse vel libero suscipit, bi 	bendum turpis sit amet, sollicitudin elit. Suspendisse lacinia, lacus sedfeugiat congue, erat lectus bibendum augue, vitae ullamcorper lorem nulla et mauris. Fusce convallis orci vitae efficitur interdum. Phasellus ac ultricies justo.
+			</td></tr>
+			
+			<tr><td colspan="2"><input type="submit" onclick="return confirm('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')" value="OK"/>&nbsp;<a href="./viewtoken?token=<%=token.token%>"><input type="button" value="Cancel"/></a></td></tr>
+			</table>
+			</form>
+		<% } %>	
+		</div>
+
+	</section>
+</body>
+</html>
