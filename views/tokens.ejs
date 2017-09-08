@@ -20,29 +20,31 @@
 	<%- include('header') %>
 
 	<section>
-		<h1>Your Tokens</h1>	
-		
+		<h1>Your Tokens</h1>
+
 		<%= locals.message %><br>
 
 		<% var accounts = locals.user.accounts %>
 		<% var tokens = locals.user.tokens %>
 		<% if( tokens && accounts ) {%>
 			<% for(var i=0; i < tokens.length; i++) { %>
-				<div>
-				<table>	
-					<tr><td><a href="./viewtoken?token=<%=tokens[i].token%>"><h2><%= tokens[i].token %></h2></a></td></tr>
-					<tr><td>
-						<% for(var j=0; j < locals.user.accounts.length; j++) { %>
-							<%if ( accounts[j].number == tokens[i].accountNumber ) { %>
-								<%= accounts[j].name %>
-								<% break; %>
-							<% } %>
-						<% } %>	- <%= tokens[i].accountNumber %></td></tr>
-				</table>
-				</div>
-			<% } %>	
-		<% } %>		
-		
+				<% if( tokens[i].token ) { %>
+					<div>
+					<table>
+						<tr><td><a href="./viewtoken?token=<%=tokens[i].token%>"><h2><%= tokens[i].token %></h2></a></td></tr>
+						<tr><td>
+							<% for(var j=0; j < locals.user.accounts.length; j++) { %>
+								<%if ( accounts[j].number == tokens[i].accountNumber ) { %>
+									<%= accounts[j].name %>
+									<% break; %>
+								<% } %>
+							<% } %>	- <%= tokens[i].accountNumber %></td></tr>
+					</table>
+					</div>
+				<% } %>
+			<% } %>
+		<% } %>
+
 		<a href="./newtoken"><button class="button button1">Add another email/mobile #</button></a>
 
 	</section>
