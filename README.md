@@ -12,7 +12,7 @@ When the reader has completed this journey, they will understand how to:
 # Architecture
 
 <p align="center">
-  <img width="756" height="351" src="static/images/architecture.png">
+  <img height="400" src="static/images/architecture.png">
 </p>
 
 ## Included Components
