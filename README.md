@@ -1,6 +1,6 @@
 # Real-Time Payments
 
-In this developer journey, we will use a Bluemix finance service to create a web application which sends and requests payments. The FTM for Real Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.  
+In this developer journey, we will use a Bluemix finance service to create a web application which sends and requests payments. The Zelle Real-Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.
 The application presents an online banking experience, starting with getting user to create an account. A user's sample back account is created with a checkings and savings account.  In order for user to start making payments, the user is requested to register an email or phone number as their token for their checkings or savings account. After completing this step, the user can send or request payments to another user's account using their token such as phone number or email. All user activities are recorded and can be displayed to the user.
 
 When the reader has completed this journey, they will understand how to:
@@ -17,15 +17,15 @@ When the reader has completed this journey, they will understand how to:
 
 ## Included Components
 
-+ [**Bluemix FTM for Real Time Payments**](https://console.ng.bluemix.net/catalog/services/ftm4zelle)
++ [**Zelle Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/ftm4zelle)
 
 ## Featured Technology
 
-+ [**FTM for Real Time Payments API**](https://console.ng.bluemix.net/apidocs/000-ftm4zelle?&language=node#introduction)
++ [**Zelle Real-Time Payments API**](https://console.ng.bluemix.net/apidocs/000-ftm4zelle?&language=node#introduction)
 
 # Deploy to Bluemix
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://github.com/IBM/Real-Time-Payments-FTM)
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://b6df0a8fbd689cdde5a4e6776e215d7e04892bc6@github.ibm.com/mhudson/ftm4zelle)
 
 # Run the Application Locally
 Follow these steps to setup and run this developer journey. The steps are described in detail below.
@@ -41,7 +41,7 @@ Follow these steps to setup and run this developer journey. The steps are descri
 
 ## 1. Clone the repo
 
-Clone the `FTM for Real Time Payments code` locally. In a terminal, run:
+Clone the `Real Time Payments` locally. In a terminal, run:
 
   `$ git clone https://b6df0a8fbd689cdde5a4e6776e215d7e04892bc6@github.ibm.com/mhudson/ftm4zelle.git`
 
@@ -50,7 +50,7 @@ Clone the `FTM for Real Time Payments code` locally. In a terminal, run:
 
 Create the following services:
 
-* [**FTM for Real Time Payments**](https://console.ng.bluemix.net/catalog/services/ftm4zelle)
+* [**Zelle Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/zelle-real-time-payments)
 
 
 ## 3. Run Application
@@ -62,7 +62,7 @@ cd into this project's root directory
 
 ## Using the Application
 
-The application emulates a bank's online application. Using your favorite browser, launch the application and choose "i'm new here". Enter a first name, last name, user name and any password.
+The application emulates a bank's online. Using your favorite browser, launch the application and choose "i'm new here". Enter a first name, last name, user name and any password.
 
 If the specified user name exists, the user will be redirected to the standard login process. Otherwise the application will create two new accounts, checking and savings, by calling the 'core banking system' database, and put some money in each account. The application will also create a Participant by calling FTM's CXCParticipant (POST) API.
 
@@ -100,12 +100,14 @@ John logs out of the application.
 
 ### In use case #4. Billy Fish is a developer who works at the bank. He is building a portal for bank operators to monitor the operations of the payments hub.
 
-Using a web browser, he logs onto the BlueMix Console and navigates to the [FTM for Real Time Payments APIs](https://console.ng.bluemix.net/apidocs/000-ftm4zelle?&language=node#introduction). His user name, password and API Key are verified by the API Proxy which maintains a secret username and password to use with FTM’s REST API.
+Using a web browser, he logs onto the BlueMix Console and navigates to the FTM for Real Time Payments APIs. His user name, password and API Key are verified by the API Proxy which maintains a secret username and password to use with FTM’s REST API.
 
 He can explore FTM’s core read-only APIs and he chooses to view inboundTransactions (GET).
 
+Find more information on FTM for Real Time Payments api calls [here](https://console.ng.bluemix.net/apidocs/000-ftm4zelle?&language=node#introduction).
 
 Billy logs out of BlueMix.
+
 
 
 # Troubleshooting
