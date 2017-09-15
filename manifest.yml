@@ -1,12 +1,12 @@
 declared-services:
-    FTM for Real Time Payments:
-      label: ftm-for-real-time-payments-service
-      plan: ftm-for-real-time-payments-service-free-plan
+    Zelle Real-Time Payments:
+      label: zelle-real-time-payments-service
+      plan: zelle-real-time-payments-service-free-plan
 applications:
-- name: ftm4zelle
+- name: real-time-payments
   random-route: true
   memory: 128M
   services:
-    - FTM for Real Time Payments
+    - Zelle Real-Time Payments
   env:
     NODE_TLS_REJECT_UNAUTHORIZED: 0

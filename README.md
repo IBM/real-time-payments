@@ -1,4 +1,4 @@
-# Real Time Payments with Financial Transaction Manager
+# Real-Time Payments
 
 In this developer journey, we will use a Bluemix finance service to create a web application which sends and requests payments. The FTM for Real Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.  
 The application presents an online banking experience, starting with getting user to create an account. A user's sample back account is created with a checkings and savings account.  In order for user to start making payments, the user is requested to register an email or phone number as their token for their checkings or savings account. After completing this step, the user can send or request payments to another user's account using their token such as phone number or email. All user activities are recorded and can be displayed to the user.

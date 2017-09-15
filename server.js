@@ -32,7 +32,7 @@ const ORGANIZATION_ID = 'FGB';
 const PARTNER_TYPE = 1;
 const APPLICATION_NAME = 'SampleApp';
 const GENERATED = 'generated';
-const BLUEMIX_SERVICE_NAME = 'ftm-for-real-time-payments-service';
+const BLUEMIX_SERVICE_NAME = 'zelle-real-time-payments';
 
 // REST APIs
 var serviceBrokerUri         = 'http://localhost'; // in case you're not running in BlueMix

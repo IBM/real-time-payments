@@ -1,7 +1,7 @@
 {
-   "name": "ftm4zelle",
+   "name": "real-time-payments",
    "version": "1.0.0",
-   "description": "FTM for Zelle running in the IBM Cloud for Financial Services",
+   "description": "Create a real time payments application",
    "main": "index.js",
    "scripts": {
       "start": "node server.js"
@@ -23,6 +23,6 @@
    },
    "repository": {
       "type": "git",
-      "url": "https://github.ibm.com/mhudson/ftm4zelle.git"
+      "url": "https://github.com/raheelzubairy/Real-Time-Payments-FTM"
    }
 }
