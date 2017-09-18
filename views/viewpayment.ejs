@@ -20,16 +20,16 @@
 	<%- include('header') %>
 
 	<section>
-		<h1>Payment</h1>		
+		<h1>Payment</h1>
 
-		<%= locals.message %><br>		
+		<%= locals.message %><br>
 
-		<% 
-		var payment = locals.user.payment; 
-		var accounts = locals.user.accounts;		
-		
+		<%
+		var payment = locals.user.payment;
+		var accounts = locals.user.accounts;
+
 		var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-		
+
 		var paymentStaii = [
 		{ status: "A", label: "Accepted"  },
 		{ status: "C", label: "Completed" },
@@ -41,7 +41,7 @@
 		{ status: "G", label: "Pending"   },
 		{ status: "S", label: "Sent"      }
 		];
-		
+
 		var status = "Unknown";
 		for(i = 0; i < paymentStaii.length; i++) {
 			if( paymentStaii[i].status == payment.status ) {
@@ -49,7 +49,7 @@
 				break;
 			}
 		}
-		
+
 		var accountName = null;
 		for(i = 0; i < accounts.length; i++) {
 			if( accounts[i].number == payment.accountNumber ) {
@@ -57,21 +57,21 @@
 				break;
 			}
 		}
-		
+
 		var failureReasonDescription = null;
 		if( payment.failureReasonDescription ) {
 			failureReasonDescription = "(" + payment.failureReasonDescription + ")";
 		}
-		
+
 		var declineMemo = null;
 		if( payment.declineMemo ) {
 			declineMemo = "-" + payment.declineMemo;
 		}
-		
-		var d = new Date(payment.initiationTime); 
+
+		var d = new Date(payment.initiationTime);
 		var initiationDate = d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getFullYear();
-		var initiationTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-		
+		var initiationTime = (d.getHours() < 10 ? '0' : '') + d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes() + ":" + (d.getSeconds() < 10 ? '0' : '') + d.getSeconds();
+
 		%>
 
 		<div>
@@ -85,7 +85,7 @@
 			<tr><td>Initiation Time</td><td><%=initiationTime%></td></tr>
 			<tr><td>Amount</td><td>$<%= (payment.amount).toFixed(2) %></td></tr>
 			<tr><td>Account</td><td><%= accountName %> - <%= payment.accountNumber %></td></tr>
-			<tr><td>Recipient</td><td><%= payment.recipientToken %> (<%= payment.recipientFirstName %> <%= payment.recipientLastName %>)</td></tr>			
+			<tr><td>Recipient</td><td><%= payment.recipientToken %> (<%= payment.recipientFirstName %> <%= payment.recipientLastName %>)</td></tr>
 		<% } %>
 		<tr><td colspan="2"><a href="./activity"><button class="button button1">OK</button></a></td></tr>
 		</table>
