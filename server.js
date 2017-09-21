@@ -994,9 +994,9 @@ function cxcPaymentRequest(token, fname, lname, amount, cxcToken, fn) {
 									'"businessName": "' + ORGANIZATION_ID + '", ' +
 									'"description": "' + "requesting $" + amount + " to be sent to " + token + '", ' +
 									'"dueDate": "' + dueDate + '", ' +
-									'"firstName": "' + fname + '", ' +
-									'"fullName": "' + fname + " " + lname + '", ' +
-									'"lastName": "' + lname + '", ' +
+									'"firstName": "' + cxcToken.firstName + '", ' +
+									'"fullName": "' + cxcToken.firstName + " " + cxcToken.lastName + '", ' +
+									'"lastName": "' + cxcToken.lastName + '", ' +
 									'"organizationID": "' + ORGANIZATION_ID + '", ' +
 									'"paymentProfileID": "' + cxcToken.paymentProfileID + '", ' +
 									'"requestorID": "' + GENERATED + '", ' +
