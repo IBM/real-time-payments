@@ -20,29 +20,29 @@
 	<%- include('header') %>
 
 	<section>
-		<h1>Send</h1>	
+		<h1>Send</h1>
 
 		<%= locals.message %><br>
-		
-		<% 
-		var accounts = locals.user.accounts; 
-		var tokens = locals.user.tokens; 
-		
-		var recipient;
-		var recipients = locals.user.recipients; 
-		if (recipients) { 
-			for(var i=0; i < locals.user.recipients.length; i++) { 
-				 if (recipients[i].token == locals.user.token && 
-				       recipients[i].currentRecipientFirstName == locals.user.fname &&
-					   recipients[i].currentRecipientLastName == locals.user.lname) { 
-					recipient = recipients[i] 
-				} 
-			 } 
-		 } 
-		 %>				
 
-		<div>		
-		<% if( !recipient ) { %>	
+		<%
+		var accounts = locals.user.accounts;
+		var tokens = locals.user.tokens;
+
+		var recipient;
+		var recipients = locals.user.recipients;
+		if (recipients) {
+			for(var i=0; i < locals.user.recipients.length; i++) {
+				 if (recipients[i].token == locals.user.token &&
+				       recipients[i].currentRecipientFirstName == locals.user.fname &&
+					   recipients[i].currentRecipientLastName == locals.user.lname) {
+					recipient = recipients[i]
+				}
+			 }
+		 }
+		 %>
+
+		<div>
+		<% if( !recipient ) { %>
 			<table>
 			<tr><td><a href="./recipients"><button class="button button1">Add Recpients</button></a></td></tr>
 			</table>
@@ -55,33 +55,34 @@
 			<input type="hidden" name="token" value="<%=recipient.token%>">
 			<input type="hidden" name="fname" value="<%=recipient.currentRecipientFirstName%>">
 			<input type="hidden" name="lname" value="<%=recipient.currentRecipientLastName%>">
-			<table>
-			<tr><td colspan="2"><h2><%=recipient.currentRecipientFirstName%> <%=recipient.currentRecipientLastName%></h2><br><%=recipient.token%></td></tr>
-			<tr><td>$</td><td><input type="text" name="amount" size="8" value="0.00"></td></tr>
-			<tr><td>From</td><td>
-			<select name="account">	
-				<%if (accounts ) { %>					
-					<% for(var i=0; i < accounts.length; i++) { %>					
+			<table class="send2-table">
+			<tr><td colspan="2"><h2><%=recipient.currentRecipientFirstName%> <%=recipient.currentRecipientLastName%></h2><%=recipient.token%></td></tr>
+			<tr><td colspan="2"></td><br></tr>
+			<tr><td style='width: 20px; text-align: right;'>$</td><td><input type="text" name="amount" size="8" value="0.00"></td></tr>
+			<tr><td style='width: 20px; text-align: right;'>From</td><td>
+			<select style='width: auto;' name="account">
+				<%if (accounts ) { %>
+					<% for(var i=0; i < accounts.length; i++) { %>
 						<% for(var j=0; j < tokens.length; j++) { %>
 							<%if ( accounts[i].number == tokens[j].accountNumber ) { %>
 								<option value=<%=accounts[i].number%>>
 								<%= accounts[i].name %> - <%=accounts[i].number %>
 								</option>
 								<% break; %>
-							<% } %>	
-						<% } %>						
-					<% } %>					
-				<% } %>				
+							<% } %>
+						<% } %>
+					<% } %>
+				<% } %>
 			</select>
-			  
+
 			</td></tr>
-			
+
 			<tr><td colspan="2"><input type="submit" onclick="return confirm('Are you sure?')" value="Send"/></td></tr>
 			</table>
 			</form>
-		<% } %>		
+		<% } %>
 		</div>
-			
+
 	</section>
 </body>
 </html>

@@ -14,15 +14,32 @@
 # limitations under the License.
 -->
 <header>
-	<a href="#" id="logo"></a>
-	<nav>
-		<a href="#" id="menu-icon"></a>
-		<ul>
-			<li><a href="./accounts" <%if(locals.section == "1"){%>class="current"<%}%>>Accounts</a></li>
-			<li><a href="./send" <%if(locals.section == "2"){%>class="current"<%}%>>Send</a></li>
-			<li><a href="./request" <%if(locals.section == "3"){%>class="current"<%}%>>Request</a></li>
-			<li><a href="./activity" <%if(locals.section == "4"){%>class="current"<%}%>>Activity</a></li>
-			<li><a href="./logout">Logout</a></li>
-		</ul>
-	</nav>
+
+		<a href="#">
+			<img src="/img/zelle-logo.png">
+		</a>
+		<nav>
+			<a href="#" id="menu-icon"></a>
+			<ul>
+				<li><a href="./accounts" <%if(locals.section == "1"){%>class="current"<%}%>>Accounts</a></li>
+				<li><a href="./send" <%if(locals.section == "2"){%>class="current"<%}%>>Send</a></li>
+				<li><a href="./request" <%if(locals.section == "3"){%>class="current"<%}%>>Request</a></li>
+				<li><a href="./activity" <%if(locals.section == "4"){%>class="current"<%}%>>Activity</a></li>
+				<li><a href="./logout">Logout</a></li>
+			</ul>
+		</nav>
+
+	<div id="myNav" class="overlay">
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	  <div class="overlay-content">
+	    <a href="./accounts" <%if(locals.section == "1"){%>class="current"<%}%>>Accounts</a>
+	    <a href="./send" <%if(locals.section == "2"){%>class="current"<%}%>>Send</a>
+	    <a href="./request" <%if(locals.section == "3"){%>class="current"<%}%>>Request</a>
+			<a href="./activity" <%if(locals.section == "4"){%>class="current"<%}%>>Activity</a>
+			<a href="./logout">Logout</a>
+	  </div>
+	</div>
+
+	<span style="font-size:30px;cursor:pointer" id="menu-icon2" onclick="openNav()">&#9776; </span>
+
 </header>

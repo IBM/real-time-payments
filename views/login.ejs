@@ -18,22 +18,24 @@
 <%- include('head') %>
 <body>
 	<header>
-		<a href="#" id="logo"></a>
+		<a href="#">
+			<img src="/img/zelle-logo.png" width="100" height="40">
+		</a>
 	</header>
-	
+
 	<section>
 		<h1>Welcome</h1>
-		
+
 		<%= locals.message %><br>
-	
+
 		<form action="login" method="post">
-		<div>
-		<table>
+		<div class="login-info">
+		<table class="login-table">
 		<tr><td>Username</td><td><input type="text" name="username"></td></tr>
 		<tr><td>Password</td><td><input type="password" name="password"></td></tr>
 		</table>
 		</div>
-		
+
 		<input type="submit" value="Login"/><br><br>
 		<a href="./register">I'm new here</a>
 	</section>

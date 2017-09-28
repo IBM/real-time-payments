@@ -70,7 +70,9 @@
 
 		var d = new Date(payment.initiationTime);
 		var initiationDate = d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getFullYear();
+
 		var initiationTime = (d.getHours() < 10 ? '0' : '') + d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes() + ":" + (d.getSeconds() < 10 ? '0' : '') + d.getSeconds();
+		var initiationTime0 = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
 		%>
 
