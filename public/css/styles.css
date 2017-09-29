@@ -17,6 +17,16 @@
 /*RESET*/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;} body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after, q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;} del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
 
+@font-face {
+font-family: "AvenirNextLTPro-Regular";
+src: url("css/fonts/AvenirNextLTPro-Regular.eot");
+src:
+url("css/fonts/AvenirNextLTPro-Regular.woff") format("woff"),
+url("css/fonts/AvenirNextLTPro-Regular.otf") format("opentype"),
+/*url("css/fonts/Harabara.svg#filename") format("svg");*/
+}
+
+
 /*MAIN*/
 
 .section-align {
@@ -29,7 +39,8 @@ body {
 	background: #6d1ed4;
 
 	color: white;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+		font-family: "AvenirNextLTPro-Regular", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
@@ -394,7 +405,7 @@ div.panel {
 		background-color: #5536cc;
 		border-bottom: 1px solid rgba(255,255,255,0.2);
 		font-weight: normal;
-		font-family: sans-serif;
+		/* font-family: sans-serif; */
 
 	}
 
