@@ -1,6 +1,6 @@
 # Real-Time Payments
 
-In this developer journey, we will use a Bluemix finance service to create a web application which sends and requests payments. The Zelle Real-Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.
+In this developer journey, we will use a Bluemix finance service to create a web application which sends and requests payments. The Real-Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.
 The application presents an online banking experience, starting with getting user to create an account. A user's sample back account is created with a checkings and savings account.  In order for user to start making payments, the user is requested to register an email or phone number as their token for their checkings or savings account. After completing this step, the user can send or request payments to another user's account using their token such as phone number or email. All user activities are recorded and can be displayed to the user.
 
 When the reader has completed this journey, they will understand how to:
@@ -17,15 +17,15 @@ When the reader has completed this journey, they will understand how to:
 
 ## Included Components
 
-+ [**Zelle Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/ftm4zelle)
++ [**Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/real-time-payments-service)
 
 ## Featured Technology
 
-+ [**Zelle Real-Time Payments API**](https://console.ng.bluemix.net/apidocs/000-ftm4zelle?&language=node#introduction)
++ [**Real-Time Payments API**](https://console.bluemix.net/apidocs/1152)
 
 # Deploy to Bluemix
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://b6df0a8fbd689cdde5a4e6776e215d7e04892bc6@github.ibm.com/mhudson/ftm4zelle)
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://github.com/IBM/real-time-payments)
 
 # Run the Application Locally
 Follow these steps to setup and run this developer journey. The steps are described in detail below.
@@ -43,14 +43,14 @@ Follow these steps to setup and run this developer journey. The steps are descri
 
 Clone the `Real Time Payments` locally. In a terminal, run:
 
-  `$ git clone https://b6df0a8fbd689cdde5a4e6776e215d7e04892bc6@github.ibm.com/mhudson/ftm4zelle.git`
+  `$ git clone https://github.com/IBM/real-time-payments.git`
 
 
 ## 2. Create Bluemix services
 
 Create the following services:
 
-* [**Zelle Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/zelle-real-time-payments)
+* [**Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/real-time-payments-service)
 
 
 ## 3. Run Application
@@ -104,7 +104,7 @@ Using a web browser, he logs onto the BlueMix Console and navigates to the FTM f
 
 He can explore FTM’s core read-only APIs and he chooses to view inboundTransactions (GET).
 
-Find more information on FTM for Real Time Payments api calls [here](https://console.ng.bluemix.net/apidocs/000-ftm4zelle?&language=node#introduction).
+Find more information on FTM for Real Time Payments api calls [here](https://console.bluemix.net/apidocs/1152).
 
 Billy logs out of BlueMix.
 

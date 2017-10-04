@@ -32,7 +32,7 @@ const ORGANIZATION_ID = 'FGB';
 const PARTNER_TYPE = 1;
 const APPLICATION_NAME = 'SampleApp';
 const GENERATED = 'generated';
-const BLUEMIX_SERVICE_NAME = 'zelle-real-time-payments-service';
+const BLUEMIX_SERVICE_NAME = 'real-time-payments-service';
 
 // REST APIs
 var serviceBrokerUri         = 'http://localhost'; // in case you're not running in BlueMix
@@ -81,7 +81,6 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
 // middleware
-app.use(requireHTTPS);
 app.use(bodyParser());
 app.use(cookieParser('ftm rules !!'));
 app.use(session());
@@ -100,13 +99,6 @@ app.use(function(req, res, next) {
   res.locals.user = req.session.user;
   next();
 });
-
-function requireHTTPS(req, res, next) {
-if (req.headers && req.headers.$wssp === "80") {
-return res.redirect('https://' + req.get('host') + req.url);
-}
-next();
-}
 
 function restrict(req, res, next) {
 	if (req.session.user) {

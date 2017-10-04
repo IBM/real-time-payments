@@ -1,12 +1,12 @@
 declared-services:
-    Zelle Real-Time Payments:
-      label: zelle-real-time-payments-service
-      plan: zelle-real-time-payments-service-free-plan
+    Real-Time Payments:
+      label: real-time-payments-service
+      plan: real-time-payments-service-free-plan
 applications:
 - name: real-time-payments
   random-route: true
   memory: 128M
   services:
-    - Zelle Real-Time Payments
+    - Real-Time Payments
   env:
     NODE_TLS_REJECT_UNAUTHORIZED: 0
