@@ -18,33 +18,33 @@
 <%- include('head') %>
 <body>
 	<%- include('header') %>
-
-	<%
+	
+	<% 
 		var recipients = locals.user.recipients;
-
+		
 		var numRecipients = 0;
 		if (recipients && recipients.length > 0) {
-			for(var i=0; i < recipients.length; i++) {
-				if(recipients[i].isDeleted == "N") {
+			for(var i=0; i < recipients.length; i++) { 
+				if(recipients[i].isDeleted == "N") { 
 					numRecipients++;
 				}
 			}
-		}
+		}				
 	%>
 
-	<section class="section-align">
-		<h1>Request</h1>
-
+	<section>
+		<h1>Request</h1>	
+		
 		<%= locals.message %><br>
 
 		<h2>Select Recipient</h2>
-
-
+		 
+		
 		<% if (numRecipients > 0) { %>
 			<% for(var i=0; i < recipients.length; i++) { %>
 				<% if(recipients[i].isDeleted == "N") { %>
 					<div>
-					<table>
+					<table>	
 						<tr><td><h2><a href="./request2?token=<%=recipients[i].token%>&fname=<%=recipients[i].currentRecipientFirstName%>&lname=<%=recipients[i].currentRecipientLastName%>"><%=recipients[i].currentRecipientFirstName%> <%=recipients[i].currentRecipientLastName%></a></h2></td></tr>
 						<tr><td><%=recipients[i].token%></td></tr>
 					</table>
@@ -53,7 +53,7 @@
 			<% } %>
 		<% } else { %>
 			<a href="./newrecipient"><button class="button button1">Add New Recipient</button></a>
-		<% } %>
+		<% } %>			
 
 	</section>
 </body>

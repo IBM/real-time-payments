@@ -28,18 +28,20 @@
 		<% var tokens = locals.user.tokens %>
 		<% if( tokens && accounts ) {%>
 			<% for(var i=0; i < tokens.length; i++) { %>
-				<div>
-				<table>	
-					<tr><td><a href="./viewtoken?token=<%=tokens[i].token%>"><h2><%= tokens[i].token %></h2></a></td></tr>
-					<tr><td>
-						<% for(var j=0; j < locals.user.accounts.length; j++) { %>
-							<%if ( accounts[j].number == tokens[i].accountNumber ) { %>
-								<%= accounts[j].name %>
-								<% break; %>
-							<% } %>
-						<% } %>	- <%= tokens[i].accountNumber %></td></tr>
-				</table>
-				</div>
+				<% if( tokens[i].token ) { %>
+					<div>
+					<table>	
+						<tr><td><a href="./viewtoken?token=<%=tokens[i].token%>"><h2><%= tokens[i].token %></h2></a></td></tr>
+						<tr><td>
+							<% for(var j=0; j < locals.user.accounts.length; j++) { %>
+								<%if ( accounts[j].number == tokens[i].accountNumber ) { %>
+									<%= accounts[j].name %>
+									<% break; %>
+								<% } %>
+							<% } %>	- <%= tokens[i].accountNumber %></td></tr>
+					</table>
+					</div>
+				<% } %>					
 			<% } %>	
 		<% } %>		
 		

@@ -17,64 +17,46 @@
 /*RESET*/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;} body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after, q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;} del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
 
-@font-face {
-font-family: "AvenirNextLTPro-Regular";
-src: url("css/fonts/AvenirNextLTPro-Regular.eot");
-src:
-url("css/fonts/AvenirNextLTPro-Regular.woff") format("woff"),
-url("css/fonts/AvenirNextLTPro-Regular.otf") format("opentype"),
-/*url("css/fonts/Harabara.svg#filename") format("svg");*/
-}
-
-
 /*MAIN*/
-
-.section-align {
-	text-align: left;
-}
-
-body {
+body { 
 	font-size: 1.05em;
 	line-height: 1.25em;
-	background: #6d1ed4;
-
-	color: white;
-    /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
-		font-family: "AvenirNextLTPro-Regular", Arial, Helvetica, sans-serif;
+	background: #f9f9f9;
+	color: #555;	
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
 a {
 
-	color: #f9f9f9;
+	color: #4C9CF1;
 	text-decoration: none;
+	font-weight: bold;
 
 }
 
 a:hover {
 
-	color: #818181;
+	color: #444;
 
 }
 
 img {
 
-	padding: 20px;
-	height: 30px;
-	width: 70px;
+	width: 100%;
 
 }
 
 header {
 
-	background: #5b16b7;
+	background: #fff;
 	width: 100%;
 	height: 76px;
 	position: fixed;
 	top: 0;
 	left: 0;
-	border-bottom: 1px solid rgba(255,255,255,0.2);
+	border-bottom: 4px solid #4C9CF1;
 	z-index: 100;
 
 }
@@ -85,7 +67,7 @@ header {
 	float: left;
 	width: 100px;
 	height: 40px;
-	background: url(../img/zelle-logo.png) no-repeat center;
+	background: url(../img/logo.png) no-repeat center;
 	display: block;
 
 }
@@ -93,15 +75,24 @@ header {
 nav {
 
 	float: right;
-	padding: 20px;
+	padding: 20px;	
+	
 }
 
-#menu-icon2 {
-	display: none;
+#menu-icon {
+
+	display: hidden;
+	width: 40px;
+	height: 40px;
+	background: #4C8FEC url(../img/menu-icon.png) center;
+
 }
 
-#myNav {
-	display: none;
+a:hover#menu-icon {
+
+	background-color: #444;
+	border-radius: 4px 4px 0 0;
+
 }
 
 ul {
@@ -120,13 +111,13 @@ li {
 
 .current {
 
-	color: #ccc;
+	color: #2262AD;
 
 }
 
 section {
 
-	margin: 40px auto 40px;
+	margin: 80px auto 40px;
 	max-width: 980px;
 	position: relative;
 	padding: 20px
@@ -136,15 +127,16 @@ section {
 h1 {
 
 	font-size: 2em;
-	color: white;
+	color: #2262AD;
 	line-height: 1.15em;
-	margin: 40px 0 ;
+	margin: 20px 0 ;
 
 }
 
 h2 {
 
 	font-size: 1.5em;
+	color: #555;
 	line-height: 1.15em;
 	margin: 20px 0 ;
 
@@ -155,22 +147,28 @@ p {
 }
 
 div {
-		background-color: #6a25c3;
+	padding: 0 18px;
+    background-color: white;
     width: 100%;
-		border: 1px solid rgba(255,255,255,0.2);
+    border: 2px solid #2262AD;
     padding: 0px;
     margin-bottom: 25px;
 }
 
 table {
-  width: 100%;
+    width: 100%;
 	table-layout:fixed;
 }
 
 td,  th {
-    padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px; 
 	word-wrap:break-word;
 }
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
 
 th {
     padding-top: 12px;
@@ -182,13 +180,13 @@ th {
 }
 
 input[type=password] {
-    padding:5px;
-    border:2px solid #ccc;
+    padding:5px; 
+    border:2px solid #ccc; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
 	width:96%;
-	padding-left: 2%;
-    padding-right: 2%;
+	padding-left: 2%; 
+    padding-right: 2%; 
 }
 
 input[type=password]:focus {
@@ -197,13 +195,13 @@ input[type=password]:focus {
 
 
 input[type=text] {
-    padding:5px;
-    border:2px solid #ccc;
+    padding:5px; 
+    border:2px solid #ccc; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
 	width:96%;
-	padding-left: 2%;
-    padding-right: 2%;
+	padding-left: 2%; 
+    padding-right: 2%; 
 }
 
 input[type=text]:focus {
@@ -211,13 +209,13 @@ input[type=text]:focus {
 }
 
 input[type=number] {
-    padding:5px;
-    border:2px solid #ccc;
+    padding:5px; 
+    border:2px solid #ccc; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
 	width:96%;
-	padding-left: 2%;
-    padding-right: 2%;
+	padding-left: 2%; 
+    padding-right: 2%; 
 }
 
 input[type=number]:focus {
@@ -226,13 +224,13 @@ input[type=number]:focus {
 
 input[list]
 {
-    padding:5px;
-    border:2px solid #ccc;
+    padding:5px; 
+    border:2px solid #ccc; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
 	width:96%;
-	padding-left: 2%;
-    padding-right: 2%;
+	padding-left: 2%; 
+    padding-right: 2%; 
 }
 
 input[list]:focus {
@@ -241,13 +239,13 @@ input[list]:focus {
 
 select
 {
-    padding:5px;
-    border:2px solid #ccc;
+    padding:5px; 
+    border:2px solid #ccc; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
 	width:96%;
-	padding-left: 2%;
-    padding-right: 2%;
+	padding-left: 2%; 
+    padding-right: 2%;  
 }
 
 select:focus {
@@ -256,7 +254,7 @@ select:focus {
 
 input[type=submit] {
 	border-radius: 12px;
-	background-color: rgba(255,255,255,0.2);
+	background-color: #2262AD; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -270,7 +268,7 @@ input[type=submit] {
 
 input[type=button] {
 	border-radius: 12px;
-	background-color: #2262AD;
+	background-color: #2262AD; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -285,8 +283,8 @@ input[type=button] {
 
 /* Style the buttons that are used to open and close the accordion panel */
 button.accordion {
-		background-color: rgba(255,255,255,0.2);
-		color: white;
+    background-color: #eee;
+    color: #555;
     cursor: pointer;
     width: 100%;
     text-align: left;
@@ -297,13 +295,14 @@ button.accordion {
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 button.accordion.active, button.accordion:hover {
-		background-color: rgba(255,255,255,0.2);
+    background-color: #ddd;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 div.panel {
     padding: 0 18px;
-    display: none;
+    background-color: white;
+    display: none;	
     width: 100%;
     border: 0px solid #2262AD;
     padding: 0px;
@@ -311,7 +310,7 @@ div.panel {
 }
 
 .button {
-		background-color: rgba(255,255,255,0.2);
+    background-color: #2262AD; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -325,119 +324,46 @@ div.panel {
 
 .button1 {border-radius: 12px;}
 
-.login-info {
-	width: 360px;
-}
-
-.login-table {
-	width: 350px;
-  table-layout: auto;
-}
-
-.send2-table {
-	width:auto;
-}
-
-.register-table {
-	width: 350px;
-  table-layout: auto;
-}
-
-.register-div {
-	width: 360px;
-}
-
 /*MEDIA QUERY*/
 @media only screen and (max-width : 640px) {
 
-	h2 {
-		font-size: 1.2em;
+	header {
+
+		position: absolute;
+
 	}
 
-	.section-align {
-		text-align: center;
-	}
+	#menu-icon {
 
-
-	.current {
-		color: #eee;
-	}
-
-	#menu-icon2 {
 		display:inline-block;
-		float: right;
-    padding-top: 30px;
-	}
-
-	#myNav {
-		display:inline-block;
-	}
-
-	.overlay {
-	    height: 100%;
-	    width: 0;
-	    position: fixed;
-	    z-index: 1;
-	    top: 0;
-	    left: 0;
-			background-color: #5536cc;
-	    overflow-x: hidden;
-	    transition: 0.1s;
-			padding: 0px;
-	}
-
-	.overlay-content {
-	    position: relative;
-	    top: 10%;
-	    width: 100%;
-	    text-align: center;
-	    margin-top: 30px;
-			padding: 0px;
-	}
-
-	.overlay a {
-		padding: 9%;
-		text-decoration: none;
-		font-size: 36px;
-		color: #eee;
-		display: block;
-		transition: 0.3s;
-		background-color: #5536cc;
-		border-bottom: 1px solid rgba(255,255,255,0.2);
-		font-weight: normal;
-		/* font-family: sans-serif; */
 
 	}
 
-	.overlay a:hover, .overlay a:focus {
-	    color: #f1f1f1;
-	}
-
-	.overlay .closebtn {
-	    position: absolute;
-	    top: 0px;
-	    right: 0px;
-			border: none;
-	}
-
-	.register-table {
-		width: 100%;
-	}
-
-	.register-div {
-		width: 100%;
-	}
-
-	.login-info {
-		width: 100%;
-	}
-
-	.login-table {
-		width: 100%;
-	}
-
-
-	nav ul, nav:active ul {
+	nav ul, nav:active ul { 
 
 		display: none;
+		position: absolute;
+		padding: 20px;
+		background: #fff;
+		border: 5px solid #444;
+		right: 20px;
+		top: 60px;
+		width: 50%;
+		border-radius: 4px 0 4px 4px;
+
+	}
+
+	nav li {
+
+		text-align: center;
+		width: 100%;
+		padding: 10px 0;
+		margin: 0;
+
+	}
+
+	nav:hover ul {
+
+		display: block;
+
 	}

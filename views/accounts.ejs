@@ -20,10 +20,10 @@
 	<%- include('header') %>
 
 	<section>
-		<h1>Your Accounts</h1>
-
+		<h1>Your Accounts</h1>	
+		
 		<%= locals.message %><br>
-
+		
 		<% var accounts = locals.user.accounts %>
 		<% if( accounts ) { %>
 			<% for(var i=0; i < accounts.length; i++) { %>
@@ -34,13 +34,13 @@
 					<tr><td>$<%= (accounts[i].balance / 100).toFixed(2)%> USD</td></tr>
 				</table>
 				</div>
-			<% } %>
-
+			<% } %>	
+			
 			<a href="./tokens"><button class="button button1">Add/Edit Your Email/Mobile #</button></a>&nbsp;
 			<a href="./recipients"><button class="button button1">Add Recipients</button></a>
 		<% } else { %>
 			<h2>You don't have any accounts</h2>
-		<% } %>
+		<% } %>		
 
 	</section>
 </body>
