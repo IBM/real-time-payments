@@ -1,7 +1,7 @@
 # Real-Time Payments
 
 In this developer journey, we will use a Bluemix finance service to create a web application which sends and requests payments. The Real-Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.
-The application presents an online banking experience, starting with getting user to create an account. A user's sample back account is created with a checkings and savings account.  In order for user to start making payments, the user is requested to register an email or phone number as their token for their checkings or savings account. After completing this step, the user can send or request payments to another user's account using their token such as phone number or email. All user activities are recorded and can be displayed to the user.
+The application presents an online banking experience, starting with getting a user to create an account. A user's sample bank account is created with a checking and savings account.  In order for user to start making payments, the user is requested to register an email or phone number as their token for their checking or savings account. After completing this step, the user can send or request payments to another user's account using their token such as phone number or email. All user activities are recorded and can be displayed to the user.
 
 When the reader has completed this journey, they will understand how to:
 
@@ -62,7 +62,7 @@ cd into this project's root directory
 
 ## Using the Application
 
-The application emulates a bank's online. Using your favorite browser, launch the application and choose "i'm new here". Enter a first name, last name, user name and any password.
+The application emulates a bank's online web or mobile portal. Using your favorite browser, launch the application and choose "i'm new here". Enter a first name, last name, user name and any password.
 
 If the specified user name exists, the user will be redirected to the standard login process. Otherwise the application will create two new accounts, checking and savings, by calling the 'core banking system' database, and put some money in each account. The application will also create a Participant by calling FTM's CXCParticipant (POST) API.
 
