@@ -855,8 +855,8 @@ function deleteCXCRecipient(token, fname, lname, username, fn) {
 }
 
 // invokes FTM's REST API to initiate a CXCPayment
-function cxcPayment(token, fname, lname, amount, cxcToken, username, fn) {
-	if( cxcToken && username )
+function cxcPayment(token, fname, lname, amount, cxcToken, user, fn) {
+	if( cxcToken && user )
 	{
 		var tokenType = getTokenType(token);
 		var expirationTime = makeExpirationTime();
@@ -868,13 +868,14 @@ function cxcPayment(token, fname, lname, amount, cxcToken, username, fn) {
 				  // Mandatory
 				  '"amount": "' + amount + '", ' +
 				  '"auditSource": "' + APPLICATION_NAME + '", ' +
-				  '"participantName": "' + username + '", ' +
+				  '"participantName": "' + user.fname + ' ' + user.lname + '", ' +
 				  '"productType": "P", ' +
+				  '"partnerID": "' + cxcToken.partnerID + '", ' +
 
 				  // Optional
+				  '"expedited": "Y", ' + // This is a Real-Time Payment !
 				  '"expirationTime": "' + expirationTime + '", ' +
 				  '"participantToken": "' + cxcToken.token + '", ' +
-				  '"partnerID": "' + cxcToken.partnerID + '", ' +
 				  '"partnerType": "' + cxcToken.partnerType + '", ' +
 				  '"paymentID": "' + GENERATED + '", ' +
 				  '"recipientFirstName": "' + fname + '", ' +
@@ -911,26 +912,31 @@ function cxcPayment(token, fname, lname, amount, cxcToken, username, fn) {
 }
 
 // invokes FTM's REST API to retrieve a CXCPayment
-function getPayment(paymentID, username, fn) {
+function getPayment(paymentID, status, user, fn) {
 	var client = new Client(serviceBrokerRequestParameters);
 	var args = {
 		headers: GET_HEADERS
 	};
-	if( username ) {
-		var key = makeCXCPaymentKey(username,
-									PARTNER_TYPE,
-									paymentID);
+	if( paymentID && status ) {
+		var query = '?paymentID=' + paymentID + '&status=' + status;
 		console.log("GET CXCPayment");
-		var readCXCPaymentsRequest = client.get(ftmBaseUrl + 'cxcpayments/' + key,
-											  args,
-											  function (payment, response) {
+		var readCXCPaymentsRequest = client.get(ftmBaseUrl + 'cxcpayments/' + query,
+											    args,
+											    function (payments, response) {
 			var err = null;
 			var obj = null;
 			if( response.statusCode == 200 ) {
-				obj = payment;
+				for(var i=0; i<payments.length; i++) {
+					// For an onUs transactions, there are two payments with the same paymentID. 
+					// One for the sender and one for the recipient.
+					// Make sure you display the payment that belongs to this account holder.
+					if( findAccount(payments[i].accountNumber, user) ) { 
+						obj = payments[i];
+					}
+				}
 			} else {
-				if(payment.errorDescription) {
-					err = payment.errorDescription;
+				if(payments.errorDescription) {
+					err = payments.errorDescription;
 				} else {
 					err = 'something went wrong on GET CXCPaymentRequest.';
 				}
@@ -950,14 +956,14 @@ function getPayment(paymentID, username, fn) {
 }
 
 // prepares to invoke FTM's REST API to initiate a CXCPayment
-function send(token, fname, lname, amount, account, username, fn) {
+function send(token, fname, lname, amount, account, user, fn) {
 	// note: not funds check is required here because
 	//       (a) FTM will check the funds and debit the account if the payment is successful
 	//       (b) the payment could be future dated
-	if( username ) {
-		console.log("send %s %s %s %s %d %s", token, fname, lname, amount, account, username);
-		lookupTokenByAccountNumber(account, username, function(err, cxcToken) {
-			cxcPayment(token, fname, lname, amount, cxcToken, username, function(err){
+	if( user ) {
+		console.log("send %s %s %s %s from %d %s %s", token, fname, lname, amount, account, user.fname, user.lname);
+		lookupTokenByAccountNumber(account, user.id, function(err, cxcToken) {
+			cxcPayment(token, fname, lname, amount, cxcToken, user, function(err){
 				return fn(err);
 			});
 		});
@@ -992,7 +998,7 @@ function cxcPaymentRequest(token, fname, lname, amount, cxcToken, fn) {
 					  '[' +
 						  '{' +
 									'"businessName": "' + ORGANIZATION_ID + '", ' +
-									'"description": "' + "requesting $" + amount + " to be sent to " + token + '", ' +
+									'"description": "' + "requesting $" + amount + " to be sent to " + cxcToken.token + '", ' +
 									'"dueDate": "' + dueDate + '", ' +
 									'"firstName": "' + cxcToken.firstName + '", ' +
 									'"fullName": "' + cxcToken.firstName + " " + cxcToken.lastName + '", ' +
@@ -1088,24 +1094,35 @@ function request(token, fname, lname, amount, account, username, fn) {
 }
 
 // invokes FTM's REST API to list the payments belonging to a CXCParticipant
-function listPayments(username, fn) {
+function listPayments(user, tokens, fn) {
 	var client = new Client(serviceBrokerRequestParameters);
 	var args = {
 		headers: GET_HEADERS
 	};
-	console.log("GET CXCPayment");
-	var readCXCPaymentRequest = client.get(ftmBaseUrl + 'cxcpayments/?' +
-														'partnerID=' + username  + '&' +
-														'partnerType=' + PARTNER_TYPE,
-													args,
-													function (payments, response) {
-		return fn(null,payments);
-	});
-    readCXCPaymentRequest.on('error', function (err) {
-		console.log('something went wrong on GET CXCPayment.', err.request.options);
-		console.log(err);
-		return fn(err,null);
-	});
+	
+	var accountQuery = '';
+	if( user.accounts && user.accounts.length > 0 ) {
+		for (var i = 0; i < user.accounts.length; i++) {
+			if(i > 0) {accountQuery += ',';}
+			accountQuery += user.accounts[i].number;
+		}
+		
+		console.log("GET CXCPayment");
+		var query = '?_where=and(in(accountNumber,' + accountQuery + '),eq(accountBankCode,' + BANK_CODE + '))';
+		var readCXCPaymentRequest = client.get(ftmBaseUrl + 'cxcpayments/' + query,
+														args,
+														function (payments, response) {
+			return fn(null,payments);
+		});
+		readCXCPaymentRequest.on('error', function (err) {
+			console.log('something went wrong on GET CXCPayment.', err.request.options);
+			console.log(err);
+			return fn(err,null);
+		});
+	}
+	else {
+		return fn(null,null);
+	}
 }
 
 // invokes FTM's REST API to list the payment requests belonging to a CXCParticipant
@@ -1307,16 +1324,18 @@ app.get('/newrecipient', restrict, function(req, res){
 app.get('/viewrecipient', restrict, function(req, res){
 	res.locals.section = '1';
 	res.locals.title = 'Recipients';
-	res.locals.user.token = req.query.token;
-	res.locals.user.fname = req.query.fname;
-	res.locals.user.lname = req.query.lname;
+	res.locals.recipienttoken = req.query.token;
+	res.locals.recipientfname = req.query.fname;
+	res.locals.recipientlname = req.query.lname;
 	res.render('viewrecipient');
 });
 
 app.get('/editrecipient', restrict, function(req, res){
 	res.locals.section = '1';
 	res.locals.title = 'Recipients';
-	res.locals.user.token = req.query.token;
+	res.locals.recipienttoken = req.query.token;
+	res.locals.recipientfname = req.query.fname;
+	res.locals.recipientlname = req.query.lname;
 	res.render('editrecipient');
 });
 
@@ -1360,9 +1379,9 @@ app.get('/send', restrict, function(req, res){
 app.get('/send2', restrict, function(req, res){
 	res.locals.section = '2';
 	res.locals.title = 'Send';
-	res.locals.user.token = req.query.token;
-	res.locals.user.fname = req.query.fname;
-	res.locals.user.lname = req.query.lname;
+	res.locals.recipienttoken = req.query.token;
+	res.locals.recipientfname = req.query.fname;
+	res.locals.recipientlname = req.query.lname;
 	listTokensUsingCXCTokens(req.session.user.id, function(err, myTokens){
 		req.session.user.tokens = myTokens;
 		res.render('send2');
@@ -1370,8 +1389,8 @@ app.get('/send2', restrict, function(req, res){
 });
 
 app.post('/send', restrict, function(req, res){
-	console.log('POST send %s:%s:%s', req.body.token, req.body.fname, req.body.lname, req.body.amount, req.body.account);
-	send(req.body.token, req.body.fname, req.body.lname, req.body.amount, req.body.account, req.session.user.id, function(err) {
+	console.log('POST send %s:%s:%s:%s:%s:%s:%s', req.body.token, req.body.fname, req.body.lname, req.body.amount, req.body.account, req.session.user.fname, req.session.user.lname);
+	send(req.body.token, req.body.fname, req.body.lname, req.body.amount, req.body.account, req.session.user, function(err) {
 		req.session.error = err;
 		if(err){
 			res.redirect('send2?token=' + req.body.token + '&fname=' + req.body.fname +'&lname=' + req.body.lname);
@@ -1398,9 +1417,9 @@ app.get('/request', restrict, function(req, res){
 app.get('/request2', restrict, function(req, res){
 	res.locals.section = '3';
 	res.locals.title = 'Request';
-	res.locals.user.token = req.query.token;
-	res.locals.user.fname = req.query.fname;
-	res.locals.user.lname = req.query.lname;
+	res.locals.recipienttoken = req.query.token;
+	res.locals.recipientfname = req.query.fname;
+	res.locals.recipientlname = req.query.lname;
 	listTokensUsingCXCTokens(req.session.user.id, function(err, myTokens){
 		req.session.user.tokens = myTokens;
 		res.render('request2');
@@ -1428,12 +1447,12 @@ app.post('/request', restrict, function(req, res){
 app.get('/activity', restrict, function(req, res){
 	res.locals.section = '4';
 	res.locals.title = 'Activity';
-
-	listPaymentRequests(req.session.user.id, function(err, myPaymentRequests){
-		req.session.user.paymentrequests = myPaymentRequests;
-		listPayments(req.session.user.id, function(err, myPayments){
-			listTokensUsingCXCTokens(req.session.user.id, function(err, myTokens) {
-				req.session.user.tokens = myTokens;
+	
+	listTokensUsingCXCTokens(req.session.user.id, function(err, myTokens) {
+		req.session.user.tokens = myTokens;
+		listPaymentRequests(req.session.user.id, function(err, myPaymentRequests){
+			req.session.user.paymentrequests = myPaymentRequests;
+			listPayments(req.session.user, myTokens, function(err, myPayments){				
 				req.session.user.payments = myPayments;
 				res.render('activity');
 			});
@@ -1446,7 +1465,7 @@ app.get('/viewpayment', restrict, function(req, res){
 	res.locals.title = 'Activity';
 
 	var payment;
-	getPayment(req.query.paymentID, req.session.user.id, function(err, payment) {
+	getPayment(req.query.paymentID, req.query.status, req.session.user, function(err, payment) {
 		req.session.user.payment = payment;
 		if(payment) {
 		  res.render('viewpayment');

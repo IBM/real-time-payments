@@ -29,9 +29,9 @@
 		var recipients = locals.user.recipients;
 		if (recipients) { 
 			for(var i=0; i < locals.user.recipients.length; i++) { 
-				if (recipients[i].token == locals.user.token && 
-				    recipients[i].currentRecipientFirstName == locals.user.fname &&
-					recipients[i].currentRecipientLastName == locals.user.lname) { 
+				if (recipients[i].token == locals.recipienttoken && 
+				    recipients[i].currentRecipientFirstName == locals.recipientfname &&
+					recipients[i].currentRecipientLastName == locals.recipientlname) { 
 					recipient = recipients[i];
 				} 
 			} 

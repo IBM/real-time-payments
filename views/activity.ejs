@@ -96,7 +96,7 @@
 						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
 						<td>
 						<%if (payments[i].paymentID) {%>
-							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>&status=<%=payments[i].status%>">
 						<% } %>
 						Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>					 
 						<% for(var j=0; j < accounts.length; j++) { %>
@@ -168,9 +168,13 @@
 							<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
 							<td>
 							<%if (payments[i].paymentID) {%>
-								<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
-							<% } %>
-							Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>							 
+								<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>&status=<%=payments[i].status%>">
+							<% } %>		
+							<%if (payments[i].partnerID == locals.user.id) {%>
+								Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>	
+							<%} else {%>
+								Received $<%=payments[i].amount.toFixed(2)%> from <%=payments[i].participantToken%> (<%=payments[i].participantName%>)<br>	
+							<% } %>								
 							<% for(var j=0; j < accounts.length; j++) { %>
 								<%if ( accounts[j].number == payments[i].accountNumber ) { %>
 									Using <%= accounts[j].name %> - <%=payments[i].accountNumber%>
@@ -240,7 +244,7 @@
 						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
 						<td>
 						<%if (payments[i].paymentID) {%>
-							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>&status=<%=payments[i].status%>">
 						<% } %>
 						Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>
 						 <% for(var j=0; j < accounts.length; j++) { %>
@@ -300,7 +304,7 @@
 						<td><%= monthNames[d.getMonth()] %> <%=d.getDate() %></td>
 						<td>
 						<%if (payments[i].paymentID) {%>
-							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>">
+							<a href="/viewpayment?paymentID=<%=payments[i].paymentID%>&status=<%=payments[i].status%>">
 						<% } %>
 						Sent $<%=payments[i].amount.toFixed(2)%> to <%=payments[i].recipientToken%> (<%=payments[i].recipientFirstName%> <%=payments[i].recipientLastName%>)<br>						 
 						<% for(var j=0; j < accounts.length; j++) { %>

@@ -52,7 +52,7 @@
 		
 		var d = new Date(paymentrequest.initiationDate); 
 		var initiationDate = d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getFullYear();
-		var initiationTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var initiationTime = d.toLocaleTimeString();
 		
 		var token = null;
 		if( paymentrequest.requestorDetails ) {
@@ -87,7 +87,7 @@
 			<tr><td>Amount</td><td>$<%= (paymentrequest.amount).toFixed(2) %></td></tr>
 			<tr><td>Account</td><td><%= accountName %> - <%= accountNumber %></td></tr>
 			<tr><td>Email/Mobile #</td><td><%=token%></td></tr>
-			<tr><td>Sender</td><td><%= paymentrequest.responderToken %> (<%= paymentrequest.responderName %>)</td></tr>			
+			<tr><td>Responder</td><td><%= paymentrequest.responderToken %> (<%= paymentrequest.responderName %>)</td></tr>			
 		<% } %>
 		<tr><td colspan="2"><a href="./activity"><button class="button button1">OK</button></a></td></tr>
 		</table>

@@ -70,7 +70,7 @@
 		
 		var d = new Date(payment.initiationTime); 
 		var initiationDate = d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getFullYear();
-		var initiationTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var initiationTime = d.toLocaleTimeString();
 		
 		%>
 
@@ -84,8 +84,14 @@
 			<tr><td>Initiation Date</td><td><%=initiationDate%></td></tr>
 			<tr><td>Initiation Time</td><td><%=initiationTime%></td></tr>
 			<tr><td>Amount</td><td>$<%= (payment.amount).toFixed(2) %></td></tr>
-			<tr><td>Account</td><td><%= accountName %> - <%= payment.accountNumber %></td></tr>
-			<tr><td>Recipient</td><td><%= payment.recipientToken %> (<%= payment.recipientFirstName %> <%= payment.recipientLastName %>)</td></tr>			
+			<% if( accountName ) { %>
+				<tr><td>Account</td><td><%= accountName %> - <%= payment.accountNumber %></td></tr>
+			<% } %>
+			<%if (payment.partnerID == locals.user.id) {%>	
+				<tr><td>Recipient</td><td><%= payment.recipientToken %> (<%= payment.recipientFirstName %> <%= payment.recipientLastName %>)</td></tr>
+			<% } else { %>
+				<tr><td>Sender</td><td><%= payment.participantToken %> (<%= payment.participantName %>)</td></tr>
+			<% } %>
 		<% } %>
 		<tr><td colspan="2"><a href="./activity"><button class="button button1">OK</button></a></td></tr>
 		</table>
