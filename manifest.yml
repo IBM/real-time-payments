@@ -1,5 +1,5 @@
 declared-services:
-    Real-Time Payments:
+    Real-Time-Payments:
       label: real-time-payments-service
       plan: real-time-payments-service-free-plan
 applications:
@@ -7,6 +7,6 @@ applications:
   random-route: true
   memory: 128M
   services:
-    - Real-Time Payments
+    - Real-Time-Payments
   env:
     NODE_TLS_REJECT_UNAUTHORIZED: 0
