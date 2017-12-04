@@ -24,7 +24,7 @@ When the reader has completed this code pattern, they will understand how to:
 
 + [**Real-Time Payments API**](https://console.bluemix.net/apidocs/1152)
 
-# Deploy to Bluemix
+# Deploy to IBM Cloud
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://github.com/IBM/real-time-payments)
 
@@ -38,7 +38,9 @@ Follow these steps to setup and run this code pattern. The steps are described i
 ## Steps
 1. [Clone the repo](#1-clone-the-repo)
 2. [Create Bluemix services](#2-create-bluemix-services)
-3. [Run Application](#3-run-application)
+3. [Configure Manifest](#3-configure-manifest)
+4. [Configure .env file](#4-configure-env-file)
+5. [Run the application](#5-run-application)
 
 ## 1. Clone the repo
 
@@ -54,14 +56,52 @@ Create the following services:
 * [**Real-Time Payments**](https://console.ng.bluemix.net/catalog/services/real-time-payments-service)
 
 
-## 3. Run Application
+## 3. Configure Manifest
+Edit the `manifest.yml` file in the folder that contains your code and replace `my-real-time-payments-app` with a unique name for your application.  Additional - update the service name so they match what you have in IBM Cloud. The relevant portion of the `manifest.yml` file looks like the following:
+
+```
+declared-services:
+    {Real-Time-Payments}:
+      label: real-time-payments-service
+      plan: real-time-payments-service-free-plan
+applications:
+- name: {my-real-time-payments-app}
+  random-route: true
+  memory: 128M
+  services:
+    - {Real-Time-Payments}
+  env:
+    NODE_TLS_REJECT_UNAUTHORIZED: 0
+```
+
+## 4. Configure .env file
+
+Create a `.env` file in the root directory of your clone of the project repository by copying the sample `.env.example` file using the following command:
+
+**NOTE** Most files systems regard files with a "." at the front as hidden files.  If you are on a Windows system, you should be able to use either [GitBash](https://git-for-windows.github.io/) or [Xcopy](https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/xcopy.mspx?mfr=true)
+
+
+```
+cp .env.example .env
+```
+
+You will need to update the credentials with Real-time payments service access token:
+
+```
+# Real-time Payments
+CRED_REAL_TIME_PAYMENTS_URL=https://ftm-proxy.mybluemix.net
+CRED_SIMULATED_INSTRUMENT_ANALYTICS_ACCESSTOKEN=
+```
+
+
+## 5. Run the application
 
 cd into this project's root directory
 + Run `npm install` to install the app's dependencies
 + Run `runme.sh`
 + Access the running app in a browser at <http://0.0.0.0:8080/>
 
-## Using the Application
+# Using the Application
 
 The application emulates a bank's online web or mobile portal. Using your favorite browser, launch the application and choose "i'm new here". Enter a first name, last name, user name and any password.
 
@@ -118,6 +158,29 @@ Billy logs out of BlueMix.
 ```bash
 cf logs <application-name> --recent
 ```
+
+# Privacy Notice
+
+Sample web applications that include this package may be configured to track deployments to [IBM Cloud](https://www.bluemix.net/) and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/IBM/metrics-collector-service) service on each deployment:
+
+* Node.js package version
+* Node.js repository URL
+* Application Name (`application_name`)
+* Application GUID (`application_id`)
+* Application instance index number (`instance_index`)
+* Space ID (`space_id`) or OS username
+* Application Version (`application_version`)
+* Application URIs (`application_uris`)
+* Cloud Foundry API (`cf_api`)
+* Labels and names of bound services
+* Number of instances for each bound service and associated plan information
+* Metadata in the repository.yaml file
+
+This data is collected from the `package.json` and `repository.yaml` file in the sample application and the `VCAP_APPLICATION` and `VCAP_SERVICES` environment variables in IBM Cloud and other Cloud Foundry platforms. This data is used by IBM to track metrics around deployments of sample applications to IBM Cloud to measure the usefulness of our examples, so that we can continuously improve the content we offer to you. Only deployments of sample applications that include code to ping the Deployment Tracker service will be tracked.
+
+### Disabling Deployment Tracking
+
+Deployment tracking can be disabled by removing `require('metrics-tracker-client').track();` from the beginning of the `server.js` file at the root of this repository.
 
 # License
 

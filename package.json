@@ -1,28 +1,30 @@
 {
-   "name": "real-time-payments",
-   "version": "1.0.0",
-   "description": "Create a real time payments application",
-   "main": "index.js",
-   "scripts": {
-      "start": "node server.js"
-   },
-   "author": "mhudson@us.ibm.com",
-   "license": "Apache-2.0",
-   "dependencies": {
-      "body-parser": "^1.0.2",
-      "cfenv": "^1.0.4",
-      "cookie-parser": "^1.0.1",
-      "ejs": "^2.5.7",
-      "express": "^4.15.4",
-      "express-session": "^1.15.5",
-      "moment": "^2.18.1",
-      "morgan": "^1.0.1",
-      "node-rest-client": "^3.1.0",
-      "password-hash": "^1.2.2",
-      "shorthash": "0.0.2"
-   },
-   "repository": {
-      "type": "git",
-      "url": "https://github.com/raheelzubairy/Real-Time-Payments-FTM"
-   }
+  "name": "real-time-payments",
+  "version": "1.0.0",
+  "description": "Create a real time payments application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "mhudson@us.ibm.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "cfenv": "^1.0.4",
+    "cookie-parser": "^1.0.1",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "metrics-tracker-client": "^0.2.3",
+    "moment": "^2.18.1",
+    "morgan": "^1.0.1",
+    "node-rest-client": "^3.1.0",
+    "password-hash": "^1.2.2",
+    "shorthash": "0.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/real-time-payments"
+  }
 }

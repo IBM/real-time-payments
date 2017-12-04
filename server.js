@@ -13,6 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 */
+require('dotenv').config();
+
+// Deployment tracking
+require('metrics-tracker-client').track();
+
 var express = require('express')
 , passwordHash = require('password-hash')
 , cookieParser = require('cookie-parser')
@@ -48,7 +53,15 @@ if(	appEnv &&
 		if( appEnv.services[BLUEMIX_SERVICE_NAME][0]['credentials']['accessToken']) {
 			serviceBrokerAccessToken = appEnv.services[BLUEMIX_SERVICE_NAME][0]['credentials']['accessToken'];
 		}
+} else {
+	//run locally
+	if (process.env.CRED_REAL_TIME_PAYMENTS_URL && process.env.CRED_SIMULATED_INSTRUMENT_ANALYTICS_ACCESSTOKEN) {
+		serviceBrokerUri = process.env.CRED_REAL_TIME_PAYMENTS_URL;
+		serviceBrokerAccessToken = process.env.CRED_SIMULATED_INSTRUMENT_ANALYTICS_ACCESSTOKEN;
+	}
+
 }
+
 
 var serviceBrokerRequestParameters = {
     //user:     todo, // basic http auth username if required
@@ -927,10 +940,10 @@ function getPayment(paymentID, status, user, fn) {
 			var obj = null;
 			if( response.statusCode == 200 ) {
 				for(var i=0; i<payments.length; i++) {
-					// For an onUs transactions, there are two payments with the same paymentID. 
+					// For an onUs transactions, there are two payments with the same paymentID.
 					// One for the sender and one for the recipient.
 					// Make sure you display the payment that belongs to this account holder.
-					if( findAccount(payments[i].accountNumber, user) ) { 
+					if( findAccount(payments[i].accountNumber, user) ) {
 						obj = payments[i];
 					}
 				}
@@ -1099,14 +1112,14 @@ function listPayments(user, tokens, fn) {
 	var args = {
 		headers: GET_HEADERS
 	};
-	
+
 	var accountQuery = '';
 	if( user.accounts && user.accounts.length > 0 ) {
 		for (var i = 0; i < user.accounts.length; i++) {
 			if(i > 0) {accountQuery += ',';}
 			accountQuery += user.accounts[i].number;
 		}
-		
+
 		console.log("GET CXCPayment");
 		var query = '?_where=and(in(accountNumber,' + accountQuery + '),eq(accountBankCode,' + BANK_CODE + '))';
 		var readCXCPaymentRequest = client.get(ftmBaseUrl + 'cxcpayments/' + query,
@@ -1447,12 +1460,12 @@ app.post('/request', restrict, function(req, res){
 app.get('/activity', restrict, function(req, res){
 	res.locals.section = '4';
 	res.locals.title = 'Activity';
-	
+
 	listTokensUsingCXCTokens(req.session.user.id, function(err, myTokens) {
 		req.session.user.tokens = myTokens;
 		listPaymentRequests(req.session.user.id, function(err, myPaymentRequests){
 			req.session.user.paymentrequests = myPaymentRequests;
-			listPayments(req.session.user, myTokens, function(err, myPayments){				
+			listPayments(req.session.user, myTokens, function(err, myPayments){
 				req.session.user.payments = myPayments;
 				res.render('activity');
 			});
