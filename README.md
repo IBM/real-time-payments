@@ -1,3 +1,5 @@
+![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/7bb1bf6f649e305c66de5364961c89c4/badge.svg)
+
 # Real-Time Payments
 
 In this code pattern, we will use a Bluemix finance service to create a web application which sends and requests payments. The Real-Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.
@@ -26,9 +28,23 @@ When the reader has completed this code pattern, they will understand how to:
 
 # Deploy to IBM Cloud
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://github.com/IBM/real-time-payments)
+[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/7bb1bf6f649e305c66de5364961c89c4/button.svg)](https://bluemix.net/devops/setup/deploy?repository=https://github.com/IBM/real-time-payments)
 
-# Run the Application Locally
+1. Log in to your IBM Cloud account before deploying. If already logged in, then ignore this step.
+![](readme_images/create_account_scrnshot.png)
+
+2. We can see that the app is ready to be deployed. Provide an `App name` to you application and ensure that the Region, Organization and Space is valid before pressing 'Deploy'.
+![](readme_images/create_toolchain_scrnshot.png)
+
+3. In Toolchain, the app is deployed. There are also option to edit code via eclipseIDE, git changes if required.
+![](readme_images/toolchain_scrnshot.png)
+
+4. You should see two stages pass successfully once your **Deploy Stage** completes
+![](readme_images/deployed_scrnshot.png)
+
+5. To see the app and services created and configured for this pattern, use the IBM Cloud dashboard
+
+# Run the Application locally
 Follow these steps to setup and run this code pattern. The steps are described in detail below.
 
 ## Prerequisite
