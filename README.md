@@ -15,8 +15,17 @@ When the reader has completed this code pattern, they will understand how to:
 # Architecture
 
 <p align="center">
-  <img width="1000" src="static/images/architecture.png">
+  <img width="800" src="readme_images/arch.png">
 </p>
+
+
+1. User A logs into the Demo banking portal and can link email addresses and/or phone numbers to their account, add recipients identified by their email addresses or phone numbers, and can send or request money to the recipients added by the user such as User B.
+2. All these actions are controlled through API calls by the application using the Real-time Payments service.
+3.  The service uses Redis Cache and a Cloudant DDA system to store data, process request and provide security.
+4. Once the transactions are registered and completed, they can be viewed through the banking portal.
+5.  User B can log in and see the money sent or request made by User A.
+
+
 
 ## Included Components
 
@@ -44,7 +53,7 @@ When the reader has completed this code pattern, they will understand how to:
 
 5. To see the app and services created and configured for this pattern, use the IBM Cloud dashboard
 
-# Run the Application locally
+# Run the Application Locally
 Follow these steps to setup and run this code pattern. The steps are described in detail below.
 
 ## Prerequisite
