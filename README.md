@@ -42,10 +42,10 @@ When the reader has completed this code pattern, they will understand how to:
 1. Log in to your IBM Cloud account before deploying. If already logged in, then ignore this step.
 ![](readme_images/create_account_scrnshot.png)
 
-2. We can see that the app is ready to be deployed. Provide an `App name` to you application and ensure that the Region, Organization and Space is valid before pressing 'Deploy'.
+2. We can see that the app is ready to be deployed. Provide an `App name` to your application and ensure that the Region, Organization and Space is valid before pressing 'Deploy'.
 ![](readme_images/create_toolchain_scrnshot.png)
 
-3. In Toolchain, the app is deployed. There are also option to edit code via eclipseIDE, git changes if required.
+3. In Toolchain, the app is deployed. There are also options to edit code via eclipseIDE, git changes if required.
 ![](readme_images/toolchain_scrnshot.png)
 
 4. You should see two stages pass successfully once your **Deploy Stage** completes
