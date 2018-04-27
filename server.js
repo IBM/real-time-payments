@@ -15,8 +15,6 @@
 */
 require('dotenv').config();
 
-// Deployment tracking
-require('metrics-tracker-client').track();
 
 var express = require('express')
 , passwordHash = require('password-hash')
