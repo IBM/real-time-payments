@@ -113,7 +113,7 @@ applications:
 cp .env.example .env
 ```
 
-**ノート**: ほとんどのファイルシステムで "." で始まるファイル名は、隠しファイルとして扱われます。Windowsシステムを使用している場合は、[GitBash](https://git-for-windows.github.io/) もしくは [Xcopy](https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/xcopy.mspx?mfr=true) を使用する必要があります。
+**ノート**: ほとんどのファイルシステムで "." で始まるファイル名は、隠しファイルとして扱われます。Windowsシステムを使用している場合は、[GitBash](https://git-for-windows.github.io/) もしくは [Xcopy](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/xcopy) を使用する必要があります。
 
 Real-time payments サービスのアクセストークンを使用して、資格情報を更新します:
 
