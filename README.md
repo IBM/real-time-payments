@@ -1,3 +1,5 @@
+*Read this in other languages: [日本語](README-ja.md).*
+
 # Real-Time Payments
 
 In this code pattern, we will use a Bluemix finance service to create a web application which sends and requests payments. The Real-Time Payments service is used to manage tokens and recipients, and to initiate payments and payment requests.
