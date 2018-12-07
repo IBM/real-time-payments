@@ -1,0 +1,48 @@
+{
+    "name": "Real Time Payments",
+    "description": "Discover how to generate a real-time payments application which uses Financial Transaction Manager to interface with a real-time payments network.",
+    "thumbnailURL": "blueprint/thumbnail.svg",
+    "appIconURL": "blueprint/appicon.svg",
+    "type": "WEB",
+    "tags": [
+        "devex"
+    ],
+    "demoURL": "https://real-time-payments.mybluemix.net/login",
+    "generators": {
+        "node": [
+            "generator-starterkit-content-downloader",
+            "generator-ibm-cloud-enablement",
+            "generator-ibm-service-enablement",
+            "generator-git-starterkit-credentials-builder"
+        ]
+    },
+    "generatorOptions": {
+        "generator-git-starterkit-credentials-builder": {
+            "version": "0.x.x",
+            "scope": "@arf"
+        },
+        "generator-ibm-cloud-enablement": {
+            "version": "1.0.x",
+            "options": {
+                "port": "3000"
+            }
+        },
+        "generator-ibm-service-enablement": {
+            "version": "2.3.x"
+        },
+        "generator-starterkit-content-downloader": {
+            "version": "0.x.x",
+            "scope": "@arf"
+        }
+    },
+    "requiredCapabilities": [
+        "realTimePaymentsService"
+    ],
+    "requiredCapabilitiesURLs": {
+        "realTimePaymentsService": "https://console.bluemix.net/catalog/services/real-time-payments-service"
+    },
+    "servicePlans": {
+        "realTimePaymentsService": "real-time-payments-service-free-plan"
+    },
+    "email": "cloud@us.ibm.com"
+}
